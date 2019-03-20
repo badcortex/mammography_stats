@@ -82,4 +82,24 @@ missingShapeM = length(find(isnan(dMalignant.Shape)));
 missingMarginM = length(find(isnan(dMalignant.Margin)));
 missingDensityM = length(find(isnan(dMalignant.Density)));
 
+%% PUNTO n*3 - Sintesi delle varie serie di dati attraverso tabelle di freq
+
+% Valutazione del campo di variazione e riassunto deii dati in tabelle 
+% di frequenza calcolando dove possibile frequenze assolute, relative 
+% e cumulate.
+% Commenti: La divisione in classi risulta particolarmente utile nel
+% ricavare le tabelle di frequenza delle eta dato l'ampio range, mentre per
+% le altre variabili è ragionevole mantenere la classificazione "naturale".
+fTblBiradsB = tabulate(dBenign.BIRADS);
+fTblAgeB = tabulate(dBenign.Age);
+fTblShapeB = tabulate(dBenign.Shape);
+fTblMarginB = tabulate(dBenign.Margin);
+fTblDensityB = tabulate(dBenign.Density);
+
+fTblBiradsM = tabulate(dMalignant.BIRADS);
+fTblAgeM = tabulate(dMalignant.Age);
+fTblShapeM = tabulate(dMalignant.Shape);
+fTblMarginM = tabulate(dMalignant.Margin);
+fTblDensityM = tabulate(dMalignant.Density);
+
 
