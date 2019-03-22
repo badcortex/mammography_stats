@@ -90,16 +90,39 @@ missingDensityM = length(find(isnan(dMalignant.Density)));
 % Commenti: La divisione in classi risulta particolarmente utile nel
 % ricavare le tabelle di frequenza delle eta dato l'ampio range, mentre per
 % le altre variabili è ragionevole mantenere la classificazione "naturale".
+
 fTblBiradsB = tabulate(dBenign.BIRADS);
-fTblAgeB = tabulate(dBenign.Age);
+fTblBiradsB = array2table(fTblBiradsB);
+fTblBiradsB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+% fTblAgeB = tabulate(dBenign.Age);
 fTblShapeB = tabulate(dBenign.Shape);
+fTblShapeB = array2table(fTblShapeB);
+fTblShapeB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 fTblMarginB = tabulate(dBenign.Margin);
+fTblMarginB = array2table(fTblMarginB);
+fTblMarginB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 fTblDensityB = tabulate(dBenign.Density);
+fTblDensityB = array2table(fTblDensityB);
+fTblDensityB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 
 fTblBiradsM = tabulate(dMalignant.BIRADS);
-fTblAgeM = tabulate(dMalignant.Age);
+fTblBiradsM = array2table(fTblBiradsM);
+fTblBiradsM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+% fTblAgeM = tabulate(dMalignant.Age);
 fTblShapeM = tabulate(dMalignant.Shape);
+fTblShapeM = array2table(fTblShapeM);
+fTblShapeM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 fTblMarginM = tabulate(dMalignant.Margin);
+fTblMarginM = array2table(fTblMarginM);
+fTblMarginM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 fTblDensityM = tabulate(dMalignant.Density);
+fTblDensityM = array2table(fTblDensityM);
+fTblDensityM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+
+% Calcolo del numero di classi per la variabile "Eta'"
+ageClasses = 1 + 10/3 * log10(length(dataset.Age));
+
+%% PUNTO n*4 - Sintesi qualitativa delle informazioni nei due gruppi
+
 
 
