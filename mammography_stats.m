@@ -124,5 +124,35 @@ ageClasses = 1 + 10/3 * log10(length(dataset.Age));
 
 %% PUNTO n*4 - Sintesi qualitativa delle informazioni nei due gruppi
 
+% Calcolo delle misure di tendenza centrale sulla variabile BIRADS facendo
+% distinzione tra tumori maligni e benigni.
+biradsMedianB = nanmedian(dBenign.BIRADS);
+biradsMedianM = nanmedian(dMalignant.BIRADS);
+biradsMeanB = nanmean(dBenign.BIRADS);
+biradsMeanM = nanmean(dMalignant.BIRADS);
+% Calcolo delle misure di tendenza centrale sulla variabile Age facendo
+% distinzione tra tumori maligni e benigni.
+ageMedianB = nanmedian(dBenign.Age);
+ageMedianM = nanmedian(dMalignant.Age);
+ageMeanB = nanmean(dBenign.Age);
+ageMeanM = nanmean(dMalignant.Age);
+% Calcolo delle misure di tendenza centrale sulla variabile Shape facendo
+% distinzione tra tumori maligni e benigni.
+shapeMedianB = nanmedian(dBenign.Shape);
+shapeMedianM = nanmedian(dMalignant.Shape);
+shapeMeanB = nanmean(dBenign.Shape);
+shapeMeanM = nanmean(dMalignant.Shape);
+% Calcolo delle misure di tendenza centrale sulla variabile Margin facendo
+% distinzione tra tumori maligni e benigni.
+marginMedianB = nanmedian(dBenign.Margin);
+marginMedianM = nanmedian(dMalignant.Margin);
+marginMeanB = nanmean(dBenign.Margin);
+marginMeanM = nanmean(dMalignant.Margin);
+% Calcolo delle misure di tendenza centrale sulla variabile Density facendo
+% distinzione tra tumori maligni e benigni.
+densityMedianB = nanmedian(dBenign.Density);
+densityMedianM = nanmedian(dMalignant.Density);
+densityMeanB = nanmean(dBenign.Density);
+densityMeanM = nanmean(dMalignant.Density);
 
 
