@@ -104,12 +104,31 @@ fTblBiradsB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
 fTblShapeB = tabulate(dBenign.Shape);
 fTblShapeB = array2table(fTblShapeB);
 fTblShapeB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblShapeB = [fTblShapeB,table(cumsum(fTblShapeB.FreqAss))];
+fTblShapeB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblShapeB = [fTblShapeB,table(cumsum(fTblShapeB.FreqRel))];
+fTblShapeB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
+
 fTblMarginB = tabulate(dBenign.Margin);
 fTblMarginB = array2table(fTblMarginB);
 fTblMarginB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblMarginB = [fTblMarginB,table(cumsum(fTblMarginB.FreqAss))];
+fTblMarginB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblMarginB = [fTblMarginB,table(cumsum(fTblMarginB.FreqRel))];
+fTblMarginB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 fTblDensityB = tabulate(dBenign.Density);
 fTblDensityB = array2table(fTblDensityB);
 fTblDensityB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblDensityB = [fTblDensityB,table(cumsum(fTblDensityB.FreqAss))];
+fTblDensityB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblDensityB = [fTblDensityB,table(cumsum(fTblDensityB.FreqRel))];
+fTblDensityB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 
 fTblBiradsM = tabulate(dMalignant.BIRADS);
 fTblBiradsM = array2table(fTblBiradsM);
@@ -117,19 +136,37 @@ fTblBiradsM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 fTblBiradsM = [fTblBiradsM,table(cumsum(fTblBiradsM.FreqAss))];
 fTblBiradsM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
                                         'FreqCumAss'};
+fTblBiradsM = [fTblBiradsM,table(cumsum(fTblBiradsM.FreqRel))];
+fTblBiradsM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 % fTblAgeM = tabulate(dMalignant.Age);
 fTblShapeM = tabulate(dMalignant.Shape);
 fTblShapeM = array2table(fTblShapeM);
 fTblShapeM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblShapeM = [fTblShapeM,table(cumsum(fTblShapeM.FreqAss))];
+fTblShapeM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblShapeM = [fTblShapeM,table(cumsum(fTblShapeM.FreqRel))];
+fTblShapeM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 fTblMarginM = tabulate(dMalignant.Margin);
 fTblMarginM = array2table(fTblMarginM);
 fTblMarginM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblMarginM = [fTblMarginM,table(cumsum(fTblMarginM.FreqAss))];
+fTblMarginM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblMarginM = [fTblMarginM,table(cumsum(fTblMarginM.FreqRel))];
+fTblMarginM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 fTblDensityM = tabulate(dMalignant.Density);
 fTblDensityM = array2table(fTblDensityM);
 fTblDensityM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
-
-% Calcolo del numero di classi per la variabile "Eta'"
-ageClasses = 1 + 10/3 * log10(length(dataset.Age));
+fTblDensityM = [fTblDensityM,table(cumsum(fTblDensityM.FreqAss))];
+fTblDensityM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblDensityM = [fTblDensityM,table(cumsum(fTblDensityM.FreqRel))];
+fTblDensityM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 
 %% PUNTO n*4 - Sintesi qualitativa delle informazioni nei due gruppi
 
