@@ -94,6 +94,12 @@ missingDensityM = length(find(isnan(dMalignant.Density)));
 fTblBiradsB = tabulate(dBenign.BIRADS);
 fTblBiradsB = array2table(fTblBiradsB);
 fTblBiradsB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblBiradsB = [fTblBiradsB,table(cumsum(fTblBiradsB.FreqAss))];
+fTblBiradsB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
+fTblBiradsB = [fTblBiradsB,table(cumsum(fTblBiradsB.FreqRel))];
+fTblBiradsB.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss','FreqCumRel'};
 % fTblAgeB = tabulate(dBenign.Age);
 fTblShapeB = tabulate(dBenign.Shape);
 fTblShapeB = array2table(fTblShapeB);
@@ -108,6 +114,9 @@ fTblDensityB.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
 fTblBiradsM = tabulate(dMalignant.BIRADS);
 fTblBiradsM = array2table(fTblBiradsM);
 fTblBiradsM.Properties.VariableNames = {'Valori','FreqAss','FreqRel'};
+fTblBiradsM = [fTblBiradsM,table(cumsum(fTblBiradsM.FreqAss))];
+fTblBiradsM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
+                                        'FreqCumAss'};
 % fTblAgeM = tabulate(dMalignant.Age);
 fTblShapeM = tabulate(dMalignant.Shape);
 fTblShapeM = array2table(fTblShapeM);
@@ -128,31 +137,35 @@ ageClasses = 1 + 10/3 * log10(length(dataset.Age));
 % distinzione tra tumori maligni e benigni.
 biradsMedianB = nanmedian(dBenign.BIRADS);
 biradsMedianM = nanmedian(dMalignant.BIRADS);
-biradsMeanB = nanmean(dBenign.BIRADS);
-biradsMeanM = nanmean(dMalignant.BIRADS);
+biradsModeB = mode(dBenign.BIRADS);
+biradsModenM = mode(dMalignant.BIRADS);
 % Calcolo delle misure di tendenza centrale sulla variabile Age facendo
 % distinzione tra tumori maligni e benigni.
 ageMedianB = nanmedian(dBenign.Age);
 ageMedianM = nanmedian(dMalignant.Age);
 ageMeanB = nanmean(dBenign.Age);
 ageMeanM = nanmean(dMalignant.Age);
+ageModeB = mode(dBenign.Age);
+ageModeM = mode(dMalignant.Age);
 % Calcolo delle misure di tendenza centrale sulla variabile Shape facendo
 % distinzione tra tumori maligni e benigni.
-shapeMedianB = nanmedian(dBenign.Shape);
-shapeMedianM = nanmedian(dMalignant.Shape);
-shapeMeanB = nanmean(dBenign.Shape);
-shapeMeanM = nanmean(dMalignant.Shape);
+shapeModeB = mode(dBenign.Shape);
+shapeModeM = mode(dMalignant.Shape);
 % Calcolo delle misure di tendenza centrale sulla variabile Margin facendo
 % distinzione tra tumori maligni e benigni.
-marginMedianB = nanmedian(dBenign.Margin);
-marginMedianM = nanmedian(dMalignant.Margin);
-marginMeanB = nanmean(dBenign.Margin);
-marginMeanM = nanmean(dMalignant.Margin);
+marginModeB = mode(dBenign.Margin);
+marginModeM = mode(dMalignant.Margin);
 % Calcolo delle misure di tendenza centrale sulla variabile Density facendo
 % distinzione tra tumori maligni e benigni.
-densityMedianB = nanmedian(dBenign.Density);
-densityMedianM = nanmedian(dMalignant.Density);
-densityMeanB = nanmean(dBenign.Density);
-densityMeanM = nanmean(dMalignant.Density);
+densityModeB = mode(dBenign.Density);
+densityModeM = mode(dMalignant.Density);
+
+% Calcolo delle misure di dispersione sulla variabile Age facendo
+% distinzione tra tumori maligni e benigni.
+ageVarB = var(dBenign.Age);
+ageVarM = nanvar(dMalignant.Age);
+ageStdB = std(dBenign.Age);
+ageStdM = nanstd(dMalignant.Age);
+
 
 
