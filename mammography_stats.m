@@ -1,4 +1,6 @@
 % Elaborazione di Dati Biomedici - Esercitazione n*1.
+% Autore: Andrea Panno
+
 clear;
 close all;
 
@@ -8,7 +10,7 @@ close all;
 dataset = readtable('mammographic_masses.txt','Delimiter',',',...
                     'HeaderLines',0,'ReadVariableNames',false,'TreatAsEmpty',{'?'});
 
-% Asseganzione dei nomi alle variabili 
+% Asseganzione dei nomi alle variabili
 dataset.Properties.VariableNames{1} = 'BIRADS';   % Classificatore tumore
 dataset.Properties.VariableNames{2} = 'Age';      % Eta' del paziente
 dataset.Properties.VariableNames{3} = 'Shape';    % Forma della massa tumorale
@@ -16,7 +18,7 @@ dataset.Properties.VariableNames{4} = 'Margin';   % Bordi della massa tumorale
 dataset.Properties.VariableNames{5} = 'Density';  % Densita' della massa
 dataset.Properties.VariableNames{6} = 'Severity'; % Benigno / maligno
 
-% Acquisizione del grandezza del dataset originale
+% Acquisizione della grandezza del dataset originale
 originalDataLength = height(dataset);
 
 % Classificazione delle variabili
@@ -27,7 +29,7 @@ originalDataLength = height(dataset);
 % Density:  nominale
 % Severity: nominale
 
-%% PUNTO n*2 - Controllo di qualità sui dati del dataset
+%% PUNTO n*2 - Controllo di qualita sui dati del dataset
 
 % BIRADS: Deve essere compreso tra 1-5.
 % Age:    La mammografia viene effettuata dopo lo sviluppo del seno.
@@ -53,8 +55,8 @@ dMalignant = dataset(dataset.Severity == 1,:);
 % categoria diagnostica.
 % Il conteggio delle unita statistiche totali valide viene effettuato
 % ricavando la lunghezza del dataset da cui sono state eliminate le 
-% unità non ritenute valide.
-validStatUnits = height(dataset); 
+% unita non ritenute valide.
+validDataLength = height(dataset); 
 
 validBiradsB = length(find(~isnan(dBenign.BIRADS)));
 validAgeB = length(find(~isnan(dBenign.Age)));
@@ -82,6 +84,31 @@ missingShapeM = length(find(isnan(dMalignant.Shape)));
 missingMarginM = length(find(isnan(dMalignant.Margin)));
 missingDensityM = length(find(isnan(dMalignant.Density)));
 
+% Generazione dei grafici sulla qualita dataset.
+figure(1);
+pie([validDataLength,originalDataLength - validDataLength]);
+title('Analisi unità statistiche')
+validUnits = strcat('# Unità stat. valide:',{' '},string(validDataLength));
+invalidUnits = strcat('# Unità stat. non valide:',{' '},string(originalDataLength - validDataLength));
+legend({validUnits,invalidUnits},'Location','bestoutside');
+
+figure(2);
+pie([height(dBenign),height(dMalignant)]);
+title('Suddivisione tumori (dataset validato)');
+benign = strcat('# Tumori benigni:',{' '},string(height(dBenign)));
+malignant = strcat('# Tumori maligni:',{' '},string(height(dMalignant)));
+legend({benign,malignant},'Location','bestoutside');
+
+figure(3);
+bar([missingAgeB,missingAgeM; ... 
+    missingBiradsB,missingBiradsM; ...
+    missingDensityB,missingDensityM; ...
+    missingMarginB,missingMarginM; ...
+    missingShapeB,missingShapeM]);
+set(gca,'XTickLabel',{'Age','Birads','Density','Margin','Shape'});
+title('Unità statistiche mancanti');
+legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
+
 %% PUNTO n*3 - Sintesi delle varie serie di dati attraverso tabelle di freq
 
 % Valutazione del campo di variazione e riassunto deii dati in tabelle 
@@ -89,7 +116,7 @@ missingDensityM = length(find(isnan(dMalignant.Density)));
 % e cumulate.
 % Commenti: La divisione in classi risulta particolarmente utile nel
 % ricavare le tabelle di frequenza delle eta dato l'ampio range, mentre per
-% le altre variabili è ragionevole mantenere la classificazione "naturale".
+% le altre variabili e' ragionevole mantenere la classificazione "naturale".
 
 fTblBiradsB = tabulate(dBenign.BIRADS);
 fTblBiradsB = array2table(fTblBiradsB);
@@ -167,42 +194,4 @@ fTblDensityM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
 fTblDensityM = [fTblDensityM,table(cumsum(fTblDensityM.FreqRel))];
 fTblDensityM.Properties.VariableNames = {'Valori','FreqAss','FreqRel',...
                                         'FreqCumAss','FreqCumRel'};
-
-%% PUNTO n*4 - Sintesi qualitativa delle informazioni nei due gruppi
-
-% Calcolo delle misure di tendenza centrale sulla variabile BIRADS facendo
-% distinzione tra tumori maligni e benigni.
-biradsMedianB = nanmedian(dBenign.BIRADS);
-biradsMedianM = nanmedian(dMalignant.BIRADS);
-biradsModeB = mode(dBenign.BIRADS);
-biradsModenM = mode(dMalignant.BIRADS);
-% Calcolo delle misure di tendenza centrale sulla variabile Age facendo
-% distinzione tra tumori maligni e benigni.
-ageMedianB = nanmedian(dBenign.Age);
-ageMedianM = nanmedian(dMalignant.Age);
-ageMeanB = nanmean(dBenign.Age);
-ageMeanM = nanmean(dMalignant.Age);
-ageModeB = mode(dBenign.Age);
-ageModeM = mode(dMalignant.Age);
-% Calcolo delle misure di tendenza centrale sulla variabile Shape facendo
-% distinzione tra tumori maligni e benigni.
-shapeModeB = mode(dBenign.Shape);
-shapeModeM = mode(dMalignant.Shape);
-% Calcolo delle misure di tendenza centrale sulla variabile Margin facendo
-% distinzione tra tumori maligni e benigni.
-marginModeB = mode(dBenign.Margin);
-marginModeM = mode(dMalignant.Margin);
-% Calcolo delle misure di tendenza centrale sulla variabile Density facendo
-% distinzione tra tumori maligni e benigni.
-densityModeB = mode(dBenign.Density);
-densityModeM = mode(dMalignant.Density);
-
-% Calcolo delle misure di dispersione sulla variabile Age facendo
-% distinzione tra tumori maligni e benigni.
-ageVarB = var(dBenign.Age);
-ageVarM = nanvar(dMalignant.Age);
-ageStdB = std(dBenign.Age);
-ageStdM = nanstd(dMalignant.Age);
-
-
 
