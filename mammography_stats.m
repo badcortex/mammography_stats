@@ -21,6 +21,10 @@ dataset.Properties.VariableNames{6} = 'Severity'; % Benigno / maligno
 % Acquisizione della grandezza del dataset originale
 originalDataLength = height(dataset);
 
+% Calcolo del numero di tumori benigni / maligni
+numBenign = height(dataset(dataset.Severity == 0,:));
+numMalignant = height(dataset(dataset.Severity == 1,:));
+
 % Classificazione delle variabili
 % BIRADS:   ordinale 
 % Age:      rapporti  
@@ -108,6 +112,13 @@ bar([missingAgeB,missingAgeM; ...
 set(gca,'XTickLabel',{'Age','Birads','Density','Margin','Shape'});
 title('Unità statistiche mancanti');
 legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
+
+figure(4);
+pie([numBenign,numMalignant]);
+title('Numero di unità statistiche non valide');
+benign = strcat('# Righe tumori benigni:',{' '},string(numBenign));
+malignant = strcat('# Righe tumori maligni:',{' '},string(numMalignant));
+legend({benign,malignant},'Location','bestoutside');
 
 %% PUNTO n*3 - Sintesi delle varie serie di dati attraverso tabelle di freq
 
