@@ -59,8 +59,7 @@ dMalignant = dataset(dataset.Severity == 1,:);
 % categoria diagnostica.
 % Il conteggio delle unita statistiche totali valide viene effettuato
 % ricavando la lunghezza del dataset da cui sono state eliminate le 
-% unita non ritenute valide.
-validDataLength = height(dataset); 
+% unita non ritenute valide. 
 
 validBiradsB = length(find(~isnan(dBenign.BIRADS)));
 validAgeB = length(find(~isnan(dBenign.Age)));
@@ -88,6 +87,16 @@ missingShapeM = length(find(isnan(dMalignant.Shape)));
 missingMarginM = length(find(isnan(dMalignant.Margin)));
 missingDensityM = length(find(isnan(dMalignant.Density)));
 
+% Eliminazione delle unità statistiche con valori mancanti.
+dataset(isnan(dataset.BIRADS) | isnan(dataset.Age) | ...
+        isnan(dataset.Shape) | isnan(dataset.Margin) | ...
+        isnan(dataset.Density) | isnan(dataset.Severity),:) = [];  
+% Aggiornamento dataset splittato.
+dBenign = dataset(dataset.Severity == 0,:);
+dMalignant = dataset(dataset.Severity == 1,:);
+
+validDataLength = height(dataset);
+
 % Generazione dei grafici sulla qualita dataset.
 figure(1);
 pie([validDataLength,originalDataLength - validDataLength]);
@@ -114,10 +123,10 @@ title('Unità statistiche mancanti');
 legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
 
 figure(4);
-pie([numBenign,numMalignant]);
+pie([numBenign - height(dBenign),numMalignant - height(dMalignant)]);
 title('Numero di unità statistiche non valide');
-benign = strcat('# Righe tumori benigni:',{' '},string(numBenign));
-malignant = strcat('# Righe tumori maligni:',{' '},string(numMalignant));
+benign = strcat('# Righe tumori benigni:',{' '},string(numBenign - height(dBenign)));
+malignant = strcat('# Righe tumori maligni:',{' '},string(numMalignant - height(dMalignant)));
 legend({benign,malignant},'Location','bestoutside');
 
 %% PUNTO n*3 - Sintesi delle varie serie di dati attraverso tabelle di freq
