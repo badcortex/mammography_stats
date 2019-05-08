@@ -129,6 +129,40 @@ benign = strcat('# Righe tumori benigni:',{' '},string(numBenign - height(dBenig
 malignant = strcat('# Righe tumori maligni:',{' '},string(numMalignant - height(dMalignant)));
 legend({benign,malignant},'Location','bestoutside');
 
+%% Suddivisione in classi per la variabile Age
+% Suddivido i valori assunti dalla variabile Age in classi di ampiezza pari
+% a 10 anni. Considerazioni min(dataset)=18 e max(dataset)=88.
+
+% Vettori delle eta suddivisi in classi
+bAges = []; % Tumori benigni
+mAges = []; % Tumori maligni
+
+bAges = length(discretize(dBenign.Age,18:1:27)) - sum(isnan(discretize(dBenign.Age,18:1:27)));
+bAges = [bAges, length(discretize(dBenign.Age,28:1:37)) - sum(isnan(discretize(dBenign.Age,28:1:37)))];
+bAges = [bAges, length(discretize(dBenign.Age,38:1:47)) - sum(isnan(discretize(dBenign.Age,38:1:47)))];
+bAges = [bAges, length(discretize(dBenign.Age,48:1:57)) - sum(isnan(discretize(dBenign.Age,48:1:57)))];
+bAges = [bAges, length(discretize(dBenign.Age,58:1:67)) - sum(isnan(discretize(dBenign.Age,58:1:67)))];
+bAges = [bAges, length(discretize(dBenign.Age,68:1:77)) - sum(isnan(discretize(dBenign.Age,68:1:77)))];
+bAges = [bAges, length(discretize(dBenign.Age,78:1:88)) - sum(isnan(discretize(dBenign.Age,78:1:88)))];
+
+mAges = length(discretize(dMalignant.Age,18:1:27)) - sum(isnan(discretize(dMalignant.Age,18:1:27)));
+mAges = [mAges, length(discretize(dMalignant.Age,28:1:37)) - sum(isnan(discretize(dMalignant.Age,28:1:37)))];
+mAges = [mAges, length(discretize(dMalignant.Age,38:1:47)) - sum(isnan(discretize(dMalignant.Age,38:1:47)))];
+mAges = [mAges, length(discretize(dMalignant.Age,48:1:57)) - sum(isnan(discretize(dMalignant.Age,48:1:57)))];
+mAges = [mAges, length(discretize(dMalignant.Age,58:1:67)) - sum(isnan(discretize(dMalignant.Age,58:1:67)))];
+mAges = [mAges, length(discretize(dMalignant.Age,68:1:77)) - sum(isnan(discretize(dMalignant.Age,68:1:77)))];
+mAges = [mAges, length(discretize(dMalignant.Age,78:1:88)) - sum(isnan(discretize(dMalignant.Age,78:1:88)))];
+
+% Suddivisione in classi del dataset 
+dataAges = [];
+dataAges = length(discretize(dataset.Age,18:1:27)) - sum(isnan(discretize(dataset.Age,18:1:27)));
+dataAges = [dataAges, length(discretize(dataset.Age,28:1:37)) - sum(isnan(discretize(dataset.Age,28:1:37)))];
+dataAges = [dataAges, length(discretize(dataset.Age,38:1:47)) - sum(isnan(discretize(dataset.Age,38:1:47)))];
+dataAges = [dataAges, length(discretize(dataset.Age,48:1:57)) - sum(isnan(discretize(dataset.Age,48:1:57)))];
+dataAges = [dataAges, length(discretize(dataset.Age,58:1:67)) - sum(isnan(discretize(dataset.Age,58:1:67)))];
+dataAges = [dataAges, length(discretize(dataset.Age,68:1:77)) - sum(isnan(discretize(dataset.Age,68:1:77)))];
+dataAges = [dataAges, length(discretize(dataset.Age,78:1:88)) - sum(isnan(discretize(dataset.Age,78:1:88)))];
+
 %% PUNTO n*3 - Sintesi delle varie serie di dati attraverso tabelle di freq
 
 % Valutazione del campo di variazione e riassunto deii dati in tabelle 
@@ -226,7 +260,7 @@ set(gca,'XTickLabel',{'1','2','3','4','5'});
 title('Frequenze BIRADS');
 legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
 
-% Ortogramma delle frequenzw assolute per la variabile "Shape".
+% Ortogramma delle frequenze assolute per la variabile "Shape".
 figure(7);
 bar([fTblShapeB.FreqAss(1),fTblShapeM.FreqAss(1); ...
      fTblShapeB.FreqAss(2),fTblShapeM.FreqAss(2); ...
@@ -236,7 +270,7 @@ set(gca,'XTickLabel',{'Round','Oval','Lobular','Irregular'});
 title('Frequenze Shape');
 legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
 
-% Ortogramma delle frequenzw assolute per la variabile "Margin".
+% Ortogramma delle frequenze assolute per la variabile "Margin".
 figure(8);
 bar([fTblMarginB.FreqAss(1),fTblMarginM.FreqAss(1); ...
      fTblMarginB.FreqAss(2),fTblMarginM.FreqAss(2); ...
@@ -246,3 +280,18 @@ bar([fTblMarginB.FreqAss(1),fTblMarginM.FreqAss(1); ...
 set(gca,'XTickLabel',{'Circumscribed','Microtubulated','Obscured','Ill-defined','Spiculated'});
 title('Frequenze Margin');
 legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
+
+% Ortogramma delle frequenze assolute per la variabile "Density".
+figure(9);
+bar([fTblDensityB.FreqAss(1),fTblDensityM.FreqAss(1); ...
+     fTblDensityB.FreqAss(2),fTblDensityM.FreqAss(2); ...
+     fTblDensityB.FreqAss(3),fTblDensityM.FreqAss(3); ...
+     fTblDensityB.FreqAss(4),fTblDensityM.FreqAss(4)]);
+set(gca,'XTickLabel',{'High','Iso','Low','Fat-containing'});
+title('Frequenze Density');
+legend({'Tumori benigni','Tumori maligni'},'Location','bestoutside');
+
+
+
+
+
